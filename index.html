@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Checklist</title>
+    
        <style>
-        /* Load Proxima Nova from GitHub */
-        @font-face {
-            font-family: "Proxima Nova";
-            src: url("https://github.com/kwillisVA/docebo-checklist/raw/refs/heads/main/fonts/ProximaNova-Regular-01.woff2") format("woff2"),
-            font-weight: normal;
-            font-style: normal;
-        }
+@font-face {
+    font-family: "Proxima Nova";
+    src: url("https://github.com/kwillisVA/docebo-checklist/raw/refs/heads/main/fonts/ProximaNova-Regular-01.woff2") format("woff2"),
+         url("https://github.com/kwillisVA/docebo-checklist/raw/refs/heads/main/fonts/ProximaNova-Regular-01.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "Proxima Nova", sans-serif;
+}
+
 
         /* General Styles */
         body {
