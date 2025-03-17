@@ -15,16 +15,24 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f8ff;
+            flex-direction: column;
         }
-        .container {
-            width: 100vw;
-            height: 100vh;
+        .slideshow-container {
+            width: 80vw;
+            height: 70vh;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+        .slides {
+            width: 100%;
+            height: 100%;
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
-        .step-section {
-            width: 100vw;
-            height: 100vh;
+        .slide {
+            min-width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -55,89 +63,93 @@
 </head>
 <body>
 
-    <div class="container" id="slider">
-        <!-- Introduction Slide -->
-        <div class="step-section" id="intro">
-            <h2>Welcome to the Community Education Checklist</h2>
-            <p>This checklist will guide you through:</p>
-            <ul style="text-align: left;">
-                <li>✅ Step 1: Welcoming children & caregivers</li>
-                <li>✅ Step 2: Explaining today's interventions</li>
-                <li>✅ Step 3: Determining the correct dosage</li>
-                <li>✅ Step 4: Reviewing key takeaways</li>
-            </ul>
-            <p>Click "Start Checklist" to begin.</p>
-            <div class="nav-buttons">
-                <button class="button next-btn" onclick="nextStep()">Start Checklist</button>
-            </div>
-        </div>
+    <h2>Community Education Checklist</h2>
 
-        <!-- Step 1 -->
-        <div class="step-section" id="step1">
-            <h2>Step 1: Welcome Children & Caregivers</h2>
-            <p>Greet caregivers and children warmly. Explain the purpose of today's session.</p>
-            <p><em>Example: "Hello! Today we are providing vitamin A and deworming tablets to help keep children healthy."</em></p>
-            <div class="nav-buttons">
-                <button class="button next-btn" onclick="nextStep()">Next</button>
+    <!-- Slideshow Container -->
+    <div class="slideshow-container">
+        <div class="slides" id="slides">
+            <div class="slide">
+                <h2>Welcome to the Checklist</h2>
+                <p>This checklist will guide you through:</p>
+                <ul style="text-align: left;">
+                    <li>✅ Step 1: Welcoming children & caregivers</li>
+                    <li>✅ Step 2: Explaining today's interventions</li>
+                    <li>✅ Step 3: Determining the correct dosage</li>
+                    <li>✅ Step 4: Reviewing key takeaways</li>
+                </ul>
+                <p>Click "Start" to begin.</p>
             </div>
-        </div>
 
-        <!-- Step 2 -->
-        <div class="step-section" id="step2">
-            <h2>Step 2: Explain Today’s Interventions</h2>
-            <p>Tell caregivers about the importance of vitamin A and deworming.</p>
-            <p>✅ Vitamin A helps with eyesight and immunity.</p>
-            <p>✅ Deworming helps children grow and absorb nutrients.</p>
-            <div class="nav-buttons">
-                <button class="button back-btn" onclick="prevStep()">Back</button>
-                <button class="button next-btn" onclick="nextStep()">Next</button>
+            <div class="slide">
+                <h2>Step 1: Welcome Children & Caregivers</h2>
+                <p>Greet caregivers and children warmly. Explain the purpose of today's session.</p>
+                <p><em>"Hello! Today we are providing vitamin A and deworming tablets to help keep children healthy."</em></p>
             </div>
-        </div>
 
-        <!-- Step 3 -->
-        <div class="step-section" id="step3">
-            <h2>Step 3: Age-to-Dose Relationship</h2>
-            <p>Determine the correct dose based on the child’s age:</p>
-            <p>👶 6-11 months: 1 blue capsule (100,000 IU)</p>
-            <p>👧 12-59 months: 1 red capsule (200,000 IU) + deworming</p>
-            <div class="nav-buttons">
-                <button class="button back-btn" onclick="prevStep()">Back</button>
-                <button class="button next-btn" onclick="nextStep()">Next</button>
+            <div class="slide">
+                <h2>Step 2: Explain Today’s Interventions</h2>
+                <p>Tell caregivers about the importance of vitamin A and deworming.</p>
+                <p>✅ Vitamin A helps with eyesight and immunity.</p>
+                <p>✅ Deworming helps children grow and absorb nutrients.</p>
             </div>
-        </div>
 
-        <!-- Step 4: Final Review -->
-        <div class="step-section" id="review">
-            <h2>Final Review</h2>
-            <p>Here you will see the vertical checklist before returning to the course.</p>
-            <div class="nav-buttons">
-                <button class="button back-btn" onclick="prevStep()">Back</button>
+            <div class="slide">
+                <h2>Step 3: Age-to-Dose Relationship</h2>
+                <p>Determine the correct dose based on the child’s age:</p>
+                <p>👶 6-11 months: 1 blue capsule (100,000 IU)</p>
+                <p>👧 12-59 months: 1 red capsule (200,000 IU) + deworming</p>
+            </div>
+
+            <div class="slide">
+                <h2>Final Review</h2>
+                <p>Here you will see the vertical checklist before returning to the course.</p>
             </div>
         </div>
     </div>
 
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button class="button back-btn" onclick="prevSlide()" id="backBtn" style="display: none;">Back</button>
+        <button class="button next-btn" onclick="nextSlide()" id="nextBtn">Start</button>
+    </div>
+
     <script>
-        let currentStep = 0;
-        const steps = document.querySelectorAll(".step-section");
-        const slider = document.getElementById("slider");
-
-        function nextStep() {
-            if (currentStep < steps.length - 1) {
-                currentStep++;
-                updateSlider();
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 0) {
-                currentStep--;
-                updateSlider();
-            }
-        }
+        let currentSlide = 0;
+        const slides = document.getElementById("slides");
+        const totalSlides = document.querySelectorAll(".slide").length;
+        const nextBtn = document.getElementById("nextBtn");
+        const backBtn = document.getElementById("backBtn");
 
         function updateSlider() {
-            const translateValue = -currentStep * 100 + "vw";
-            slider.style.transform = "translateX(" + translateValue + ")";
+            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            // Hide "Back" button on first slide
+            if (currentSlide === 0) {
+                backBtn.style.display = "none";
+                nextBtn.innerText = "Start";
+            } else {
+                backBtn.style.display = "inline-block";
+                nextBtn.innerText = "Next";
+            }
+
+            // Change "Next" button to "Finish" on last slide
+            if (currentSlide === totalSlides - 1) {
+                nextBtn.innerText = "Finish";
+            }
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlider();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlider();
+            }
         }
     </script>
 
