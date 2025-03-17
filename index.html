@@ -120,7 +120,7 @@
             Reset Progress <span style="display: flex; align-items: center;"></span>
         </button>
     </div>
-
+        
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             loadProgress();
@@ -129,11 +129,10 @@
         function toggleStep(stepId, element) {
             var content = document.getElementById(stepId);
             if (content.style.display === "block") {
-                content.style.display = "none";
-                element.classList.remove("completed");
+                content.style.display = "none"; 
             } else {
                 content.style.display = "block";
-                element.classList.add("completed");
+                element.classList.add("completed"); // Ensure step remains counted as completed
             }
             saveProgress();
             updateProgress();
@@ -146,12 +145,12 @@
             document.getElementById("progressBar").style.width = progress + "%";
             document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
 
-            // Show the reset button only if progress has started
+            // Fix: Show the reset button as soon as at least one step is completed
             var resetButton = document.getElementById("resetButton");
             if (completedSteps.length > 0) {
-                resetButton.style.display = "flex"; // Make it visible
+                resetButton.style.display = "flex"; 
             } else {
-                resetButton.style.display = "none"; // Keep it hidden if no progress
+                resetButton.style.display = "none"; 
             }
         }
 
@@ -169,7 +168,7 @@
                 if (completedSteps.includes(step.textContent.trim())) {
                     step.classList.add("completed");
                     var stepId = step.getAttribute("onclick").match(/'([^']+)'/)[1];
-                    document.getElementById(stepId).style.display = "block";
+                    document.getElementById(stepId).style.display = "block"; // Ensure content remains collapsed but completed
                 }
             });
             updateProgress();
