@@ -4,26 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Checklist</title>
-    
-       <style>
-@font-face {
-    font-family: "Proxima Nova";
-    src: url("https://kwillisva.github.io/docebo-checklist/fonts/ProximaNova-Regular-01.woff2") format("woff2"), url("https://kwillisva.github.io/docebo-checklist/fonts/ProximaNova-Regular-01.woff") format("woff");
-    font-weight: normal;
-    font-style: normal;
-}
 
-body {
-    font-family: "Proxima Nova", sans-serif;
-}
+    <style>
+        /* Load Proxima Nova */
+        @font-face {
+            font-family: "Proxima Nova";
+            src: url("https://kwillisva.github.io/docebo-checklist/fonts/ProximaNova-Regular-01.woff2") format("woff2"),
+                 url("https://kwillisva.github.io/docebo-checklist/fonts/ProximaNova-Regular-01.woff") format("woff");
+            font-weight: normal;
+            font-style: normal;
+        }
 
-
-        /* General Styles */
+        /* General Page Styling */
         body {
             font-family: "Proxima Nova", sans-serif;
             margin: 0;
             padding: 0;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -33,11 +29,10 @@ body {
             text-align: center;
         }
 
-        /* Slideshow Styling */
+        /* Slideshow Container */
         .slideshow-container {
             width: 80vw;
             height: 70vh;
-            display: flex;
             overflow: hidden;
             position: relative;
             background: white;
@@ -45,56 +40,41 @@ body {
             border-radius: 10px;
         }
 
-        /* Fix slide container width */
-.slides {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center; /* Center slides horizontally */
-    align-items: center; /* Center slides vertically */
-    transition: transform 0.5s ease-in-out;
-}
-
-/* Fix individual slide centering */
-.slide {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 30px;
-    width: 100vw; /* Ensure it takes full viewport width */
-    max-width: 900px; /* Prevents it from getting too wide */
-}
-
-/* Ensure all text is fully centered */
-h1, h2, p, ul {
-    text-align: center;
-    margin: 0 auto; /* Ensures consistent centering */
-    max-width: 80%; /* Keeps text from stretching too wide */
-}
-
-/* Headings & Text */
-h2 {
-    font-size: clamp(24px, 6vw, 36px);
-    font-weight: 700;
-    color: #003850; /* Primary branding color */
-}
-
-/* Optional: Add a slight padding to keep balance */
-p {
-    padding: 10px 0;
-}
-
-
-        ul {
-            text-align: left;
-            padding-left: 20px;
+        /* Slide Wrapper */
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
         }
 
-        ul li {
-            font-size: clamp(16px, 1.2vw, 18px);
-            margin-top: 0.5rem;
+        /* Individual Slide */
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+        }
+
+        /* Headings & Text */
+        h1, h2, p, ul {
+            text-align: center;
+            margin: 0 auto;
+            max-width: 80%;
+        }
+
+        h2 {
+            font-size: clamp(24px, 6vw, 36px);
+            font-weight: 700;
+            color: #003850;
+        }
+
+        p {
+            padding: 10px 0;
         }
 
         /* Navigation Buttons */
@@ -132,40 +112,6 @@ p {
             background-color: #aaa;
         }
 
-        /* Logo & Branding Elements */
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 1.5rem;
-        }
-
-        .logo-container img.small {
-            max-width: 40%;
-            width: 100%;
-        }
-
-        .logo-container img.large {
-            max-width: 70%;
-            width: 100%;
-        }
-
-        /* Responsive Adjustments */
-        @media screen and (max-width: 768px) {
-            .slideshow-container {
-                width: 95vw;
-                height: 75vh;
-            }
-
-            p, ul li {
-                font-size: 14px;
-            }
-
-            .button {
-                font-size: 16px;
-                padding: 10px 20px;
-            }
-        }
     </style>
 
 </head>
@@ -223,42 +169,35 @@ p {
 
     <script>
         let currentSlide = 0;
-        const slides = document.getElementById("slides");
-        const totalSlides = document.querySelectorAll(".slide").length;
+        const slides = document.querySelectorAll(".slide");
         const nextBtn = document.getElementById("nextBtn");
         const backBtn = document.getElementById("backBtn");
 
-        function updateSlider() {
-            slides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.display = i === index ? "flex" : "none";
+            });
 
-            // Hide "Back" button on first slide
-            if (currentSlide === 0) {
-                backBtn.style.display = "none";
-                nextBtn.innerText = "Start";
-            } else {
-                backBtn.style.display = "inline-block";
-                nextBtn.innerText = "Next";
-            }
-
-            // Change "Next" button to "Finish" on last slide
-            if (currentSlide === totalSlides - 1) {
-                nextBtn.innerText = "Finish";
-            }
+            backBtn.style.display = index === 0 ? "none" : "inline-block";
+            nextBtn.innerText = index === slides.length - 1 ? "Finish" : "Next";
         }
 
         function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
+            if (currentSlide < slides.length - 1) {
                 currentSlide++;
-                updateSlider();
+                showSlide(currentSlide);
             }
         }
 
         function prevSlide() {
             if (currentSlide > 0) {
                 currentSlide--;
-                updateSlider();
+                showSlide(currentSlide);
             }
         }
+
+        // Initialize the first slide
+        showSlide(currentSlide);
     </script>
 
 </body>
