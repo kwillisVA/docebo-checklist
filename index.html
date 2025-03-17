@@ -99,23 +99,25 @@
     </div>
     <div id="step3" class="content">
         <p>Use visuals to explain the correct dosage for each age group.</p>
-    </div>
     <div style="display: flex; justify-content: center; margin-top: 15px;">
-        <button onclick="resetProgress()" style="
-            padding: 12px 20px;
+        <button id="resetButton" onclick="resetProgress()" style="
+            padding: 12px 24px;
             font-size: 18px;
             background-color: red;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            display: flex;
+            display: none; /* Initially hidden */
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
             font-weight: bold;
+            width: 200px;
+            height: 50px;
+            text-align: center;
         ">
-            Reset Progress
+            Reset Progress <span style="display: flex; align-items: center;"></span>
         </button>
     </div>
 
@@ -143,6 +145,14 @@
             var progress = (completedSteps.length / steps.length) * 100;
             document.getElementById("progressBar").style.width = progress + "%";
             document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
+
+            // Show the reset button only if progress has started
+            var resetButton = document.getElementById("resetButton");
+            if (completedSteps.length > 0) {
+                resetButton.style.display = "flex"; // Make it visible
+            } else {
+                resetButton.style.display = "none"; // Keep it hidden if no progress
+            }
         }
 
         function saveProgress() {
@@ -173,6 +183,7 @@
             document.querySelectorAll('.content').forEach(function (content) {
                 content.style.display = "none";
             });
+            document.getElementById("resetButton").style.display = "none"; // Hide reset button after clearing
             updateProgress();
         }
     </script>
