@@ -7,196 +7,113 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f8ff;
+        }
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .step-section {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
         }
-        .progress-container {
-            width: 80%;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            margin: 20px auto;
-            height: 20px;
-            position: relative;
+        .nav-buttons {
+            margin-top: 20px;
         }
-        .progress-bar {
-            width: 0%;
-            height: 100%;
-            background-color: #0073e6;
-            border-radius: 5px;
-            transition: width 0.5s ease-in-out;
-        }
-        .progress-text {
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        .step {
+        .button {
+            padding: 10px 20px;
             font-size: 18px;
             cursor: pointer;
-            padding: 15px;
-            margin: 10px auto;
-            width: 80%;
-            border: 2px solid #0073e6;
+            border: none;
             border-radius: 5px;
-            background-color: #f0f8ff;
-            text-align: left;
-            font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            margin: 10px;
         }
-        .step:hover {
-            background-color: #e0f0ff;
+        .next-btn {
+            background-color: #0073e6;
+            color: white;
         }
-        .content {
-            display: none;
-            padding: 10px;
-            margin-top: 5px;
-            background-color: #ffffff;
-            border-left: 5px solid #0073e6;
-        }
-        .active {
-            display: block;
-        }
-        .checkmark {
-            font-size: 22px;
-            color: green;
-            visibility: hidden;
-        }
-        .completed .checkmark {
-            visibility: visible;
+        .back-btn {
+            background-color: #ccc;
+            color: black;
         }
     </style>
 </head>
 <body>
 
-    <h2>Interactive Community Education Checklist</h2>
+    <div class="container" id="slider">
+        <div class="step-section" id="step1">
+            <h2>Step 1: Welcome Children & Caregivers</h2>
+            <p>Click 'Next' to move forward.</p>
+            <div class="nav-buttons">
+                <button class="button next-btn" onclick="nextStep()">Next</button>
+            </div>
+        </div>
 
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <div class="progress-text" id="progressText">Progress: 0%</div>
+        <div class="step-section" id="step2">
+            <h2>Step 2: Explain Today’s Interventions</h2>
+            <p>Click 'Next' to continue.</p>
+            <div class="nav-buttons">
+                <button class="button back-btn" onclick="prevStep()">Back</button>
+                <button class="button next-btn" onclick="nextStep()">Next</button>
+            </div>
+        </div>
 
-    <!-- Steps -->
-    <div class="step" onclick="toggleStep('step1', this)" data-step-id="step1">
-        1️⃣ Community Education
-        <span class="checkmark">✅</span>
-    </div>
-    <div id="step1" class="content">
-        <p>Educate your community and raise awareness among caregivers waiting to receive service for their children.</p>
-    </div>
+        <div class="step-section" id="step3">
+            <h2>Step 3: Age-to-Dose Relationship</h2>
+            <p>Click 'Next' to continue.</p>
+            <div class="nav-buttons">
+                <button class="button back-btn" onclick="prevStep()">Back</button>
+                <button class="button next-btn" onclick="nextStep()">Next</button>
+            </div>
+        </div>
 
-    <div class="step" onclick="toggleStep('step2', this)" data-step-id="step2">
-        2️⃣ Eligibility Criteria
-        <span class="checkmark">✅</span>
-    </div>
-    <div id="step2" class="content">
-        <p>Determine if a child is eligible to receive VAS+D services today.</p>
-    </div>
-
-    <div class="step" onclick="toggleStep('step3', this)"  data-step-id="step3">
-        3️⃣ Giving Vitamin A
-        <span class="checkmark">✅</span>
-    </div>
-    <div id="step3" class="content">
-        <p>Properly administer vitamin A supplements to children under 5.</p>
-    </div>
-
-        <div class="step" onclick="toggleStep('step4', this)"  data-step-id="step4">
-        4️⃣ Giving Deworming
-        <span class="checkmark">✅</span>
-    </div>
-    <div id="step4" class="content">
-        <p>Properly administer deworming tablets to children under 5.</p>
-    </div>
-        
-    <div style="display: flex; justify-content: center; margin-top: 15px;">
-        <button id="resetButton" onclick="resetProgress()" style="
-            padding: 12px 24px;
-            font-size: 18px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            display: none; /* Initially hidden */
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            width: 200px;
-            height: 50px;
-            text-align: center;
-        ">
-            Reset Progress
-        </button>
+        <div class="step-section" id="review">
+            <h2>Final Review</h2>
+            <p>Here you will see the vertical checklist before returning to the course.</p>
+            <div class="nav-buttons">
+                <button class="button back-btn" onclick="prevStep()">Back</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            loadProgress();
-        });
+        let currentStep = 0;
+        const steps = document.querySelectorAll(".step-section");
+        const slider = document.getElementById("slider");
 
-        function toggleStep(stepId, element) {
-            var content = document.getElementById(stepId);
-            if (content.style.display === "block") {
-                content.style.display = "none"; 
-            } else {
-                content.style.display = "block";
-                element.classList.add("completed"); // Ensure step stays completed
-                saveProgress();
+        function nextStep() {
+            if (currentStep < steps.length - 1) {
+                currentStep++;
+                updateSlider();
             }
-            updateProgress();
         }
 
-        function updateProgress() {
-            var steps = document.querySelectorAll('.step');
-            var completedSteps = document.querySelectorAll('.step.completed'); // ✅ Counts all completed steps correctly
-
-            var progress = (completedSteps.length / steps.length) * 100;
-            document.getElementById("progressBar").style.width = progress + "%";
-            document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
-
-            // ✅ FIX: Show the reset button as soon as ANY step is completed
-            var resetButton = document.getElementById("resetButton");
-            if (completedSteps.length > 0) {
-                resetButton.style.display = "flex"; 
-            } else {
-                resetButton.style.display = "none"; 
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateSlider();
             }
-
-            saveProgress();
         }
 
-        function saveProgress() {
-            var completedSteps = [];
-            document.querySelectorAll('.step.completed').forEach(function (step) {
-                completedSteps.push(step.getAttribute("data-step-id")); // Stores the correct step identifier
-            });
-            localStorage.setItem("completedSteps", JSON.stringify(completedSteps));
-        }
-
-        function loadProgress() {
-            var completedSteps = JSON.parse(localStorage.getItem("completedSteps")) || [];
-            document.querySelectorAll('.step').forEach(function (step) {
-                var stepId = step.getAttribute("data-step-id");
-                if (completedSteps.includes(stepId)) {
-                    step.classList.add("completed");
-                }
-            });
-            updateProgress(); // ✅ Ensures reset button updates correctly on page load
-        }
-
-        function resetProgress() {
-            localStorage.removeItem("completedSteps");
-            document.querySelectorAll('.step').forEach(function (step) {
-                step.classList.remove("completed");
-            });
-            document.querySelectorAll('.content').forEach(function (content) {
-                content.style.display = "none";
-            });
-            document.getElementById("resetButton").style.display = "none"; // ✅ Hide reset button after clearing
-            updateProgress();
+        function updateSlider() {
+            const translateValue = -currentStep * 100 + "vw";
+            slider.style.transform = "translateX(" + translateValue + ")";
         }
     </script>
-        
+
 </body>
 </html>
