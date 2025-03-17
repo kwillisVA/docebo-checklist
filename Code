@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>      
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .checklist-item {
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, font-size 0.3s ease-in-out;
+            display: block;
+            margin: 10px auto;
+            padding: 10px;
+            width: 50%;
+            border: 1px solid #0073e6;
+            border-radius: 5px;
+        }
+        .checklist-item.pulse {
+            transform: scale(1.2);
+            font-size: 22px;
+            color: #0073e6;
+            background-color: #e6f2ff;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interactive Checklist</h2>
+    <ul>
+        <li class="checklist-item" onclick="togglePulse(this)">Step 1: Introduction</li>
+        <li class="checklist-item" onclick="togglePulse(this)">Step 2: Understanding the Process</li>
+        <li class="checklist-item" onclick="togglePulse(this)">Step 3: Key Considerations</li>
+        <li class="checklist-item" onclick="togglePulse(this)">Step 4: Final Review</li>
+    </ul>
+
+    <script>
+        function togglePulse(element) {
+            element.classList.add("pulse");
+            setTimeout(() => {
+                element.classList.remove("pulse");
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
