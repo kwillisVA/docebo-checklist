@@ -102,6 +102,10 @@
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            loadProgress();
+        });
+
         function toggleStep(stepId, element) {
             var content = document.getElementById(stepId);
             if (content.style.display === "block") {
@@ -111,6 +115,7 @@
                 content.style.display = "block";
                 element.classList.add("completed");
             }
+            saveProgress();
             updateProgress();
         }
 
@@ -121,7 +126,29 @@
             document.getElementById("progressBar").style.width = progress + "%";
             document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
         }
-    </script>
 
-</body>
-</html>
+        function saveProgress() {
+            var completedSteps = [];
+            document.querySelectorAll('.step.completed').forEach(function (step) {
+                completedSteps.push(step.textContent.trim());
+            });
+            localStorage.setItem("completedSteps", JSON.stringify(completedSteps));
+        }
+
+        function loadProgress() {
+            var completedSteps = JSON.parse(localStorage.getItem("completedSteps")) || [];
+            document.querySelectorAll('.step').forEach(function (step) {
+                if (completedSteps.includes(step.textContent.trim())) {
+                    step.classList.add("completed");
+                    var stepId = step.getAttribute("onclick").match(/'([^']+)'/)[1];
+                    document.getElementById(stepId).style.display = "block";
+                }
+            });
+            updateProgress();
+        }
+
+        function resetProgress() {
+            localStorage.removeItem("completedSteps");
+            document.querySelectorAll('.step').forEach(function (step) {
+                step.classList.remove
+
