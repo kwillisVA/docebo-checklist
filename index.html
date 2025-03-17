@@ -140,15 +140,19 @@
 
         function updateProgress() {
             var steps = document.querySelectorAll('.step');
-            var completedSteps = document.querySelectorAll('.step.completed'); // Counts all completed steps
+            var completedSteps = document.querySelectorAll('.step.completed'); // ✅ Counts all completed steps correctly
 
             var progress = (completedSteps.length / steps.length) * 100;
             document.getElementById("progressBar").style.width = progress + "%";
             document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
 
-            // ✅ Fix: Show the reset button as soon as ANY step is completed, even if closed
+            // ✅ FIX: Show the reset button as soon as ANY step is completed
             var resetButton = document.getElementById("resetButton");
-            resetButton.style.display = completedSteps.length > 0 ? "flex" : "none";
+            if (completedSteps.length > 0) {
+                resetButton.style.display = "flex";
+            } else {
+                resetButton.style.display = "none";
+            }
 
             saveProgress();
         }
@@ -156,7 +160,7 @@
         function saveProgress() {
             var completedSteps = [];
             document.querySelectorAll('.step.completed').forEach(function (step) {
-                completedSteps.push(step.textContent.trim());
+                completedSteps.push(step.getAttribute("data-step-id"));
             });
             localStorage.setItem("completedSteps", JSON.stringify(completedSteps));
         }
@@ -164,10 +168,11 @@
         function loadProgress() {
             var completedSteps = JSON.parse(localStorage.getItem("completedSteps")) || [];
             document.querySelectorAll('.step').forEach(function (step) {
-                if (completedSteps.includes(step.textContent.trim())) {
+                var stepId = step.getAttribute("data-step-id");
+                if (completedSteps.includes(stepId)) {
                     step.classList.add("completed");
-                    var stepId = step.getAttribute("onclick").match(/'([^']+)'/)[1];
-                    document.getElementById(stepId).style.display = "none"; // Ensure steps stay counted even if collapsed
+                    var contentId = step.getAttribute("onclick").match(/'([^']+)'/)[1];
+                    document.getElementById(contentId).style.display = "block"; // ✅ Ensures steps are remembered as completed
                 }
             });
             updateProgress();
@@ -181,7 +186,7 @@
             document.querySelectorAll('.content').forEach(function (content) {
                 content.style.display = "none";
             });
-            document.getElementById("resetButton").style.display = "none"; // Hide reset button after clearing
+            document.getElementById("resetButton").style.display = "none"; // ✅ Hide reset button after clearing
             updateProgress();
         }
     </script>
