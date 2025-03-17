@@ -5,31 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interactive Checklist</title>
     <style>
+        /* General Styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             overflow: hidden;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #f0f8ff;
-            flex-direction: column;
+            text-align: center;
         }
+
+        /* Slideshow Styling */
         .slideshow-container {
             width: 80vw;
             height: 70vh;
             display: flex;
             overflow: hidden;
             position: relative;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
+
         .slides {
             width: 100%;
             height: 100%;
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
+
         .slide {
             min-width: 100%;
             height: 100%;
@@ -38,28 +47,103 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
+            padding: 30px;
         }
+
+        /* Headings & Text */
+        h2 {
+            font-size: clamp(24px, 6vw, 36px);
+            font-weight: 700;
+            color: #003850; /* Primary branding color */
+        }
+
+        p {
+            font-size: clamp(16px, 1.2vw, 18px);
+            line-height: 1.5;
+            max-width: 80%;
+        }
+
+        ul {
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        ul li {
+            font-size: clamp(16px, 1.2vw, 18px);
+            margin-top: 0.5rem;
+        }
+
+        /* Navigation Buttons */
         .nav-buttons {
+            display: flex;
+            justify-content: center;
             margin-top: 20px;
         }
+
         .button {
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 18px;
             cursor: pointer;
             border: none;
             border-radius: 5px;
-            margin: 10px;
+            font-weight: bold;
+            transition: background 0.3s ease-in-out;
         }
+
         .next-btn {
             background-color: #0073e6;
             color: white;
         }
+
+        .next-btn:hover {
+            background-color: #005bb5;
+        }
+
         .back-btn {
             background-color: #ccc;
             color: black;
         }
+
+        .back-btn:hover {
+            background-color: #aaa;
+        }
+
+        /* Logo & Branding Elements */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+
+        .logo-container img.small {
+            max-width: 40%;
+            width: 100%;
+        }
+
+        .logo-container img.large {
+            max-width: 70%;
+            width: 100%;
+        }
+
+        /* Responsive Adjustments */
+        @media screen and (max-width: 768px) {
+            .slideshow-container {
+                width: 95vw;
+                height: 75vh;
+            }
+
+            p, ul li {
+                font-size: 14px;
+            }
+
+            .button {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+        }
     </style>
+
 </head>
 <body>
 
