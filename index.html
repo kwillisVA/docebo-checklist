@@ -30,6 +30,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            padding: 20px;
         }
         .nav-buttons {
             margin-top: 20px;
@@ -55,32 +56,57 @@
 <body>
 
     <div class="container" id="slider">
+        <!-- Introduction Slide -->
+        <div class="step-section" id="intro">
+            <h2>Welcome to the Community Education Checklist</h2>
+            <p>This checklist will guide you through:</p>
+            <ul style="text-align: left;">
+                <li>✅ Step 1: Welcoming children & caregivers</li>
+                <li>✅ Step 2: Explaining today's interventions</li>
+                <li>✅ Step 3: Determining the correct dosage</li>
+                <li>✅ Step 4: Reviewing key takeaways</li>
+            </ul>
+            <p>Click "Start Checklist" to begin.</p>
+            <div class="nav-buttons">
+                <button class="button next-btn" onclick="nextStep()">Start Checklist</button>
+            </div>
+        </div>
+
+        <!-- Step 1 -->
         <div class="step-section" id="step1">
             <h2>Step 1: Welcome Children & Caregivers</h2>
-            <p>Click 'Next' to move forward.</p>
+            <p>Greet caregivers and children warmly. Explain the purpose of today's session.</p>
+            <p><em>Example: "Hello! Today we are providing vitamin A and deworming tablets to help keep children healthy."</em></p>
             <div class="nav-buttons">
                 <button class="button next-btn" onclick="nextStep()">Next</button>
             </div>
         </div>
 
+        <!-- Step 2 -->
         <div class="step-section" id="step2">
             <h2>Step 2: Explain Today’s Interventions</h2>
-            <p>Click 'Next' to continue.</p>
+            <p>Tell caregivers about the importance of vitamin A and deworming.</p>
+            <p>✅ Vitamin A helps with eyesight and immunity.</p>
+            <p>✅ Deworming helps children grow and absorb nutrients.</p>
             <div class="nav-buttons">
                 <button class="button back-btn" onclick="prevStep()">Back</button>
                 <button class="button next-btn" onclick="nextStep()">Next</button>
             </div>
         </div>
 
+        <!-- Step 3 -->
         <div class="step-section" id="step3">
             <h2>Step 3: Age-to-Dose Relationship</h2>
-            <p>Click 'Next' to continue.</p>
+            <p>Determine the correct dose based on the child’s age:</p>
+            <p>👶 6-11 months: 1 blue capsule (100,000 IU)</p>
+            <p>👧 12-59 months: 1 red capsule (200,000 IU) + deworming</p>
             <div class="nav-buttons">
                 <button class="button back-btn" onclick="prevStep()">Back</button>
                 <button class="button next-btn" onclick="nextStep()">Next</button>
             </div>
         </div>
 
+        <!-- Step 4: Final Review -->
         <div class="step-section" id="review">
             <h2>Final Review</h2>
             <p>Here you will see the vertical checklist before returning to the course.</p>
