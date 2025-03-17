@@ -75,9 +75,12 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
     <div class="progress-text" id="progressText">Progress: 0%</div>
-    <button onclick="resetProgress()" style="margin-top: 15px; padding: 10px 15px; font-size: 16px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
+
+        <button onclick="resetProgress()" style="margin-top: 15px; padding: 10px 15px; font-size: 16px; background-color: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
         Reset Progress ❌
     </button>
+
+
     <!-- Steps -->
     <div class="step" onclick="toggleStep('step1', this)">
         1️⃣ Welcome children and caregivers
@@ -102,6 +105,7 @@
     <div id="step3" class="content">
         <p>Use visuals to explain the correct dosage for each age group.</p>
     </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             loadProgress();
@@ -159,5 +163,5 @@
             updateProgress();
         }
     </script>
-
-
+</body>
+</html>
