@@ -121,7 +121,7 @@
         </button>
     </div>
         
-    <script>
+     <script>
         document.addEventListener("DOMContentLoaded", function () {
             loadProgress();
         });
@@ -132,9 +132,9 @@
                 content.style.display = "none"; 
             } else {
                 content.style.display = "block";
-                element.classList.add("completed"); // Ensure step remains counted as completed
+                element.classList.add("completed"); // Ensure step stays completed
+                saveProgress();
             }
-            saveProgress();
             updateProgress();
         }
 
@@ -145,13 +145,12 @@
             document.getElementById("progressBar").style.width = progress + "%";
             document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
 
-            // Fix: Show the reset button as soon as at least one step is completed
+            // ✅ Show the reset button as soon as ANY progress is made
             var resetButton = document.getElementById("resetButton");
-            if (completedSteps.length > 0) {
-                resetButton.style.display = "flex"; 
-            } else {
-                resetButton.style.display = "none"; 
-            }
+            resetButton.style.display = completedSteps.length > 0 ? "flex" : "none";
+
+            // ✅ Keep steps marked as completed, even when closed
+            saveProgress();
         }
 
         function saveProgress() {
@@ -168,7 +167,7 @@
                 if (completedSteps.includes(step.textContent.trim())) {
                     step.classList.add("completed");
                     var stepId = step.getAttribute("onclick").match(/'([^']+)'/)[1];
-                    document.getElementById(stepId).style.display = "block"; // Ensure content remains collapsed but completed
+                    document.getElementById(stepId).style.display = "block"; // Keep completed steps counted
                 }
             });
             updateProgress();
