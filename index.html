@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Checklist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .step {
+            font-size: 18px;
+            cursor: pointer;
+            padding: 15px;
+            margin: 10px auto;
+            width: 80%;
+            border: 2px solid #0073e6;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+            text-align: left;
+            font-weight: bold;
+        }
+        .step:hover {
+            background-color: #e0f0ff;
+        }
+        .content {
+            display: none;
+            padding: 10px;
+            margin-top: 5px;
+            background-color: #ffffff;
+            border-left: 5px solid #0073e6;
+        }
+        .active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interactive Community Education Checklist</h2>
+
+    <div class="step" onclick="toggleStep('step1')">1️⃣ Welcome children and caregivers</div>
+    <div id="step1" class="content">
+        <p>Greet caregivers and children, explain the purpose of today's session.</p>
+    </div>
+
+    <div class="step" onclick="toggleStep('step2')">2️⃣ Vitamin A and deworming given today</div>
+    <div id="step2" class="content">
+        <p>Provide the correct dose of **Vitamin A** and **deworming medication**.</p>
+    </div>
+
+    <div class="step" onclick="toggleStep('step3')">3️⃣ Explain age to dose relationship</div>
+    <div id="step3" class="content">
+        <p>Use visuals to explain the correct dosage for each age group.</p>
+    </div>
+
+    <script>
+        function toggleStep(stepId) {
+            var content = document.getElementById(stepId);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
