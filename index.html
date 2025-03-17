@@ -34,4 +34,94 @@
             padding: 15px;
             margin: 10px auto;
             width: 80%;
-            border: 2px
+            border: 2px solid #0073e6;
+            border-radius: 5px;
+            background-color: #f0f8ff;
+            text-align: left;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .step:hover {
+            background-color: #e0f0ff;
+        }
+        .content {
+            display: none;
+            padding: 10px;
+            margin-top: 5px;
+            background-color: #ffffff;
+            border-left: 5px solid #0073e6;
+        }
+        .active {
+            display: block;
+        }
+        .checkmark {
+            font-size: 22px;
+            color: green;
+            visibility: hidden;
+        }
+        .completed .checkmark {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Interactive Community Education Checklist</h2>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="progress-text" id="progressText">Progress: 0%</div>
+
+    <!-- Steps -->
+    <div class="step" onclick="toggleStep('step1', this)">
+        1️⃣ Welcome children and caregivers
+        <span class="checkmark">✅</span>
+    </div>
+    <div id="step1" class="content">
+        <p>Greet caregivers and children, explain the purpose of today's session.</p>
+    </div>
+
+    <div class="step" onclick="toggleStep('step2', this)">
+        2️⃣ Vitamin A and deworming given today
+        <span class="checkmark">✅</span>
+    </div>
+    <div id="step2" class="content">
+        <p>Provide the correct dose of **Vitamin A** and **deworming medication**.</p>
+    </div>
+
+    <div class="step" onclick="toggleStep('step3', this)">
+        3️⃣ Explain age to dose relationship
+        <span class="checkmark">✅</span>
+    </div>
+    <div id="step3" class="content">
+        <p>Use visuals to explain the correct dosage for each age group.</p>
+    </div>
+
+    <script>
+        function toggleStep(stepId, element) {
+            var content = document.getElementById(stepId);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                element.classList.remove("completed");
+            } else {
+                content.style.display = "block";
+                element.classList.add("completed");
+            }
+            updateProgress();
+        }
+
+        function updateProgress() {
+            var steps = document.querySelectorAll('.step');
+            var completedSteps = document.querySelectorAll('.step.completed');
+            var progress = (completedSteps.length / steps.length) * 100;
+            document.getElementById("progressBar").style.width = progress + "%";
+            document.getElementById("progressText").innerText = "Progress: " + Math.round(progress) + "%";
+        }
+    </script>
+
+</body>
+</html>
